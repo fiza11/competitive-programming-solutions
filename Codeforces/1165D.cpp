@@ -8,61 +8,55 @@ typedef long long ll;
 #define sd second
 #define lp(i, a, b) for(ll i = a; i < b; i++)
 #define lpr(i, a, b) for(ll i = a; i >= b; i--)
+typedef vector <ll> vect;
+typedef pair<int, int> pii;
 void yes(){
     cout << "YES" << endl;
 }
 void no(){
     cout << "NO" << endl;
 }
-bool prime[1000005];
-void seive(int a){
-    memset(prime, true, a + 1);
-    for(int j = 2; j*j <= a; j++){
-        if(prime[j] == true){
-            for(int i = 2*j; i <= a; i += j)
-                prime[i] = false;
-        }
-    }
-}
 main(){
     ios::sync_with_stdio(false);
     cin.tie(NULL); cout.tie(NULL);
     int t;
-    seive(1000005);
     cin >> t;
     while(t--){
-        int a, flag = 0;
-        ll b;
-        vector <ll> v, pv;
+        ll a, b, flag = 0;
+        vect v, r;
         cin >> a;
         lp(i, 0, a){
             cin >> b;
             v.pb(b);
-            //if(prime[b] == true)
-            //    pv.pb(b);
         }
         sort(v.begin(), v.end());
-        ll k = v[v.size() - 1] * v[0];
-        ll m = 0, i;
-        while(1){
-            if(prime[v[m]] == true){
-                for(i = 0; i < v.size() - 1; i++){
-                    if(k % v[i] != 0){
-                        m++;
-                        break;
-                    }
+        ll po = v[a - 1]*v[0];
+        trace(po);
+        int ct = 0;
+        trace(sqrt(po));
+        trace(floor(sqrt(po)));
+        lp(i, 2, floor(sqrt(po)) + 1){
+            if(po % i == 0){
+                if(i*i == po)
+                    r.pb(i);//, ct++;
+                else{
+                    r.pb(i);
+                    r.pb(po/i);
                 }
             }
-            else m++;
-            if(m == v.size()){
-                cout << -1 << endl;
-                break;
-            }
-            if(i == v.size() - 1){
-                cout << k << endl;
-                break;
-            }
-            k = v[v.size() - 1] * v[m];
         }
+        sort(r.begin(), r.end());
+        lp(i, 0, r.size())
+            trace(r[i]);
+        if(r != v)
+            flag = 1;
+        if(flag == 1)
+            cout << -1 << endl;
+        else cout << po << endl;
+        // if(ct - 2 == a){
+        //
+        //     cout << po << endl;
+        // }
+        // else cout << -1 << endl;
     }
 }
